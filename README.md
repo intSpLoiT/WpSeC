@@ -3,7 +3,7 @@
  
 -------------------------
 ![Supported OS](https://img.shields.io/badge/Supported%20OS-Linux-yellow.svg)
-![License](https://img.shields.io/badge/license-BSL--1.0-blue.svg)
+![License](https://img.shields.io/badge/license-intlicense--1.3-blue.svg)
 ![Owner](https://img.shields.io/badge/intSpLoiT-red.svg)
  
  # What is WpSeC
