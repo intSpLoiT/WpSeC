@@ -1,10 +1,14 @@
-**int4 
-Load console/*
+Load console
 Load __pythonutils__
+
 import sys
 import os
-console.RHOST = " "
-console.variables = config
-config = sys.argv["<":">"].strip()
-f = __pythonutils__.format()
-os.system(f"python3 scanner.py ")
+
+# Eğer değişkenler doğrudan atanamıyorsa, bir setter fonksiyonu olabilir
+console.set("RHOST", " ")
+
+# Eğer `console.variables` değişken atamayı desteklemiyorsa
+config = __pythonutils__.get_arg(1)  # sys.argv[1] gibi bir alternatif olabilir.
+
+f = __pythonutils__.format()  # Eğer `format()` çalışıyorsa
+os.system(f"python3 scanner.py")
