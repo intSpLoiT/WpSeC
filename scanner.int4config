@@ -1,0 +1,10 @@
+**int4 
+Load console/*
+Load __pythonutils__
+import sys
+import os
+console.RHOST = " "
+console.variables = config
+config = sys.argv["<":">"]
+f = __pythonutils__.format()
+os.system(f"python3 scanner.py ")
