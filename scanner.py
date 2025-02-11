@@ -34,7 +34,7 @@ BANNER = f"""
  \ V  V / '_ (_-</ -_) _|
   \_/\_/| .__/__/\___\__|
         |_|              
-    {Fore.RESET}{CYAN}           wpsec - wordpresssecurity scanner by intSpLoiT{RESET}{Style.RESET_ALL}
+    {Fore.RESET}{CYAN}           wpsec - wordpress security scanner by intSpLoiT{RESET}{Style.RESET_ALL}
 """
 
 class WPScanner:
