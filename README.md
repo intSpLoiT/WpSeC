@@ -19,7 +19,7 @@
 - [x] **SQL Injection & XSS Scanner**
 - [x] **Brute-Force Attack Module**
 - [x] **Structured Logging**
-
+- [x] **User Enumaration**
 
 <img src="screenshots/lv_0_20250209114422.gif" style="display: block; margin: auto;" alt="WpSec">
 # Usage
