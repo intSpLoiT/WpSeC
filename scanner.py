@@ -12,6 +12,7 @@ from modules.sql_xss_scanner import WPSQLXSSScanner
 from modules.bruteforce import WPBruteforce
 from modules.database_scanner import WPDatabaseScanner
 from modules.user_password_file_scanner import WPUser
+from modules.user_enum import WPUserEnumerator
 init()
 
 # 🎨 Terminal Renkleri
@@ -64,11 +65,11 @@ class WPScanner:
         self.animate(f"📡 │ Checking if {self.url} is a WordPress site...")
         wp_checker = WPChecker(self.url)
         result = wp_checker.run()
-    
+
         if result is None:
             self.results["is_wordpress"] = False
             return False
-    
+
         self.results["is_wordpress"] = result.get("is_wordpress", False)
         return self.results["is_wordpress"]
 
@@ -97,14 +98,14 @@ class WPScanner:
         print(SEPARATOR)
         try:
             if not self.check_wp():
-            	print(f"{RED}❌ │ Not a WordPress site. Exiting...{RESET} Press y/Ctrl+D to pass")
-            	sk = input("wp (do you want pass?)[y/N] >").strip().lower()
-            	if sk != "y":
-            		return
-            	pass
+                    print(f"{RED}❌ │ Not a WordPress site. Exiting...{RESET} Press y/Ctrl+D to pass")
+                    sk = input("wp (do you want pass?)[y/N] >").strip().lower()
+                    if sk != "y":
+                            return
+                    pass
         except EOFError:
-        	print("PASSİNG")
-        	pass
+                print("PASSİNG")
+                pass
         if self.mode in ["quick", "default", "deep"]:
             self.scan_ports()
         if self.mode in ["default", "deep"]:
@@ -114,6 +115,8 @@ class WPScanner:
             self.results["themes"] = WPThemeScanner(self.url).run()
             self.animate("🔢 │ Checking WordPress version...")
             self.results["wp_version"] = WPVersionScanner(self.url).run()
+            self.animate("🧐| Enumerating users")
+            self.results["user_enum"] = WPUserEnumerator(self.url).run()
         if self.mode == "deep":
             self.animate("🔑 │ Finding users & passwords...")
             self.results["users_passwords"] = WPUserPasswordFinder(self.url).run()
@@ -127,7 +130,7 @@ class WPScanner:
 
     def show_results(self):
         """Sonuçları gösterir ve log kaydı alır"""
-    
+
         def print_section(title, icon, data):
             """Verileri özel formatta yazdırır"""
             print(f"\n{icon} {title}:")
@@ -151,6 +154,7 @@ class WPScanner:
         print_section("SQL/XSS Vulns", "💀", self.results.get("sql_xss", []))
         print_section("Bruteforce Results", "🚨", self.results.get("bruteforce", "None"))
         print_section("Database Paths", "💳", self.results.get("db_user", None))
+        print_section("Enumerated Users", "🧐", self.results.get("user_enum", []))
         print(f"{GREEN}✅ │ Scan Completed!\n{RESET}")
 
         if self.log:
@@ -178,8 +182,9 @@ class WPScanner:
                 write_section("SQL/XSS Vulns", "💀", self.results.get("sql_xss", []))
                 write_section("Bruteforce Results", "🚨", self.results.get("bruteforce", "None"))
                 write_section('Database Paths',"💳", self.results.get("db_user",None))
+                write_section("Enumerated Users", "🧐", self.results.get("user_enum", []))
             print(f"{YELLOW}📂 │ Results saved to scan_results.log{RESET}")
-        
+
 
 # Argparse CLI
 if __name__ == "__main__":
@@ -220,4 +225,3 @@ if __name__ == "__main__":
     else:
         # Normal modda çalıştır
         scanner.run_scan()
-
